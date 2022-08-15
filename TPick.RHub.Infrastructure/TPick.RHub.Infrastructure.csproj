@@ -7,17 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CsMicro\src\CsMicro.Event\CsMicro.IntegrationEvent.Plugins\CsMicro.IntegrationEvent.Plugins.csproj" />
       <ProjectReference Include="..\CsMicro\src\CsMicro.Event\CsMicro.IntegrationEvent\CsMicro.IntegrationEvent.csproj" />
       <ProjectReference Include="..\CsMicro\src\CsMicro.Messaging\CsMicro.Messaging.Redis\CsMicro.Messaging.Redis.csproj" />
+      <ProjectReference Include="..\CsMicro\src\CsMicro.Persistence\CsMicro.Persistence.EfCore\CsMicro.Persistence.EfCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-      <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="6.0.8" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Events" />
+      <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
     </ItemGroup>
 
 </Project>

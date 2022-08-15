@@ -2,5 +2,6 @@
 
 public interface IHubService
 {
-    Task SendToUserAsync<TPayload>(string userId, TPayload message);
+    Task SendToAllAsync<TPayload>(string method, TPayload message);
+    Task SendToUserAsync<TPayload>(string userId, string method, TPayload message);
 }

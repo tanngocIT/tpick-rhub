@@ -15,5 +15,9 @@
     <ItemGroup>
       <ProjectReference Include="..\TPick.RHub.Infrastructure\TPick.RHub.Infrastructure.csproj" />
     </ItemGroup>
-
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="6.0.8" />
+    </ItemGroup>
 </Project>
