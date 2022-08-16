@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 
 namespace TPick.RHub.Infrastructure.Services;
@@ -13,13 +13,15 @@ public class HubClient : Hub
         _logger = logger;
     }
 
-    public override Task OnConnected()
+    public override Task OnConnectedAsync()
     {
         _logger.LogDebug("User {UserId} connected!!!", Context.User?.FindFirst("uid")?.Value);
+        return Task.CompletedTask;
     }
 
-    public override Task OnDisconnected(bool stopCalled)
+    public override Task OnDisconnectedAsync(Exception exception)
     {
         _logger.LogDebug("User {UserId} disconnected!!!", Context.User?.FindFirst("uid")?.Value);
+        return Task.CompletedTask;
     }
 }

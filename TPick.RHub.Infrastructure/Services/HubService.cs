@@ -1,20 +1,15 @@
-﻿using Microsoft.AspNet.SignalR;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 
 namespace TPick.RHub.Infrastructure.Services;
 
 public class HubService : IHubService
 {
     private static IHubContext<HubClient> _hubContext;
-    private readonly ILogger _logger;
-    
-    public static void SetHubContext(IHubContext<HubClient> hubContext)
+    private readonly ILogger<HubService> _logger;
+
+    public HubService(ILogger<HubService> logger, IHubContext<HubClient> hubContext)
     {
         _hubContext = hubContext;
-    }
-
-    public HubService(ILogger logger)
-    {
         _logger = logger;
     }
 
