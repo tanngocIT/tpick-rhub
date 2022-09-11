@@ -19,8 +19,9 @@ public class HubService : IHubService
         await _hubContext.Clients.All.SendAsync(method, message);
     }
 
-    public Task SendToUserAsync<TPayload>(string userId, string method, TPayload message)
+    public async Task SendToUserAsync<TPayload>(string userId, string method, TPayload message)
     {
-        return Task.CompletedTask;
+        _logger.LogDebug("Send to user {UserId}!", userId);
+        await _hubContext.Clients.User(userId).SendAsync(method, message);
     }
 }

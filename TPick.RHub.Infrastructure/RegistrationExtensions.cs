@@ -12,9 +12,9 @@ public static class RegistrationExtensions
             options.EnableDetailedErrors = true;
             options.KeepAliveInterval = TimeSpan.FromSeconds(30);
         });
-        // builder.Services.AddSignalRCore();
         builder.Services.AddScoped<HubClient>();
         builder.Services.AddScoped<IHubService, HubService>();
+        builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
 
         return builder
             .AddCore()
