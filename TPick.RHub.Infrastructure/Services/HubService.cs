@@ -24,4 +24,10 @@ public class HubService : IHubService
         _logger.LogDebug("Send to user {UserId}!", userId);
         await _hubContext.Clients.User(userId).SendAsync(method, message);
     }
+
+    public async Task SendToGroupAsync<TPayload>(string groupName, string method, TPayload message)
+    {
+        _logger.LogDebug("Send to group {GroupName}!", groupName);
+        await _hubContext.Clients.Group(groupName).SendAsync(method, message);
+    }
 }

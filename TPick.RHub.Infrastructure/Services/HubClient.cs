@@ -25,4 +25,9 @@ public class HubClient : Hub
         _logger.LogDebug("User {UserId} disconnected!!!", Context.User?.Identity?.Name);
         return Task.CompletedTask;
     }
+    
+    public async Task AddToGroup(string groupName)
+    {
+        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+    }
 }
