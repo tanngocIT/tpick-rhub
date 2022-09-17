@@ -1,6 +1,11 @@
-namespace TPick.RHub.Infrastructure.IntegrationEvents;
+using TPick.RHub.Infrastructure.IntegrationEvents;
 
-public class OnOrderRefreshedConsumer : IEventConsumer<SubOrderSubmittedEvent>, IEventConsumer<SubOrderRemovedEvent>
+namespace TPick.RHub.Infrastructure.EventConsumers;
+
+public class OnOrderRefreshedConsumer :
+    IEventConsumer<OrderConfirmedEvent>,
+    IEventConsumer<SubOrderSubmittedEvent>,
+    IEventConsumer<SubOrderRemovedEvent>
 {
     private readonly IHubService _hubService;
     private const string OrderRefreshed = "OrderRefreshed";
@@ -12,13 +17,22 @@ public class OnOrderRefreshedConsumer : IEventConsumer<SubOrderSubmittedEvent>, 
 
     public async Task ConsumeAsync(SubOrderSubmittedEvent @event, CancellationToken cancellationToken = default)
     {
-        var groupName = $"order-{@event.OrderId}";
-        await _hubService.SendToGroupAsync(groupName, OrderRefreshed, OrderRefreshed);
+        await SendToGroupAsync(@event.OrderId);
     }
 
     public async Task ConsumeAsync(SubOrderRemovedEvent @event, CancellationToken cancellationToken = default)
     {
-        var groupName = $"order-{@event.OrderId}";
+        await SendToGroupAsync(@event.OrderId);
+    }
+
+    public async Task ConsumeAsync(OrderConfirmedEvent @event, CancellationToken cancellationToken = default)
+    {
+        await SendToGroupAsync(@event.OrderId);
+    }
+
+    private async Task SendToGroupAsync(Guid orderId)
+    {
+        var groupName = $"order-{orderId}";
         await _hubService.SendToGroupAsync(groupName, OrderRefreshed, OrderRefreshed);
     }
 }
