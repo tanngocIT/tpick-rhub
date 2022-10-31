@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text;
 using CsMicro.InversionOfControl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http.Connections;
@@ -18,9 +19,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.Authority = "https://tpick.us.auth0.com/";
-    options.Audience = "https://tpick.tk";
-
+    // options.Authority = "https://tpick.us.auth0.com/";
+    // options.Audience = "https://tpick.tk";
     options.TokenValidationParameters = new TokenValidationParameters
     {
         // ValidateIssuerSigningKey = false,
@@ -28,7 +28,9 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = "https://tpick.tk",
         ValidIssuer = "https://tpick.us.auth0.com/",
-        NameClaimType = ClaimTypes.NameIdentifier,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("just_a_simple_secret")),
+        // ValidateIssuerSigningKey = true,
+        // NameClaimType = ClaimTypes.NameIdentifier,
     };
     options.Events = new JwtBearerEvents()
     {
@@ -46,7 +48,7 @@ builder.Services.AddAuthentication(options =>
             }
 
             return Task.CompletedTask;
-        }
+        },
     };
 });
 
