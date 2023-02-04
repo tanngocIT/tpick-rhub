@@ -4,6 +4,7 @@ namespace TPick.RHub.Infrastructure.EventConsumers;
 
 public class OnOrderRefreshedConsumer :
     IEventConsumer<OrderConfirmedEvent>,
+    IEventConsumer<OrderConfirmationRevertedEvent>,
     IEventConsumer<SubOrderSubmittedEvent>,
     IEventConsumer<SubOrderRemovedEvent>
 {
@@ -29,7 +30,12 @@ public class OnOrderRefreshedConsumer :
     {
         await SendToGroupAsync(@event.OrderId);
     }
-
+    
+    public async Task ConsumeAsync(OrderConfirmationRevertedEvent @event, CancellationToken cancellationToken = default)
+    {
+        await SendToGroupAsync(@event.OrderId);
+    }
+    
     private async Task SendToGroupAsync(Guid orderId)
     {
         var groupName = $"order-{orderId}";
